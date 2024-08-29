@@ -72,6 +72,11 @@ export default function Dashboard() {
     }
 
     const lowercasedFilterValue = filterValue.toLowerCase();
+    if (filter === 'Pet Name') {
+      return pets.filter((pet) =>
+        pet.name.toLowerCase().includes(lowercasedFilterValue)
+      );
+    }
     return pets.filter((pet) =>
       pet[filter.toLowerCase()].toLowerCase().includes(lowercasedFilterValue)
     );
@@ -163,6 +168,7 @@ export default function Dashboard() {
                 <option value="Breed">Breed</option>
                 <option value="Owner">Owner</option>
                 <option value="Species">Species</option>
+                <option value="Pet Name">Pets Name</option>
               </select>
             </div>
             {filter !== 'All' && (
@@ -182,7 +188,7 @@ export default function Dashboard() {
           <table className="min-w-full bg-gray-700 rounded-lg overflow-hidden text-xs">
             <thead>
               <tr className="bg-gray-700 text-white">
-                <th className="py-3 px-6 text-left w-1/6">Owner's Name</th>
+                <th className="py-3 px-4 text-left w-1/6">Owner's Name</th>
                 <th className="py-3 px-4 text-left w-1/6">Pet's Name</th>
                 <th className="py-3 px-4 text-left w-1/6">Species</th>
                 <th className="py-3 px-4 text-left w-1/6">Breed</th>
