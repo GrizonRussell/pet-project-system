@@ -24,10 +24,11 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
-      <h1 className="text-5xl font-bold ml-6 mb-4 mt-4 text-left">Dashboard</h1>
+      <h1 className="text-5xl font-bold mb-6 ml-5 text-left fade-in fade-in-1">Dashboard</h1>
       <div className="flex justify-center space-x-4">
-        <div className="bg-gray-800 p-4 rounded-lg shadow-lg w-1/4"> {/* Reduced width */}
-          <h2 className="text-3xl font-bold mb-4">Add Pet</h2>
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg w-1/4 fade-in fade-in-2">
+        {/* akong add pet na form */}
+          <h2 className="text-2xl font-bold mb-4">Add Pet</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label className="block mb-1 text-sm">Owner's Name</label>
@@ -89,7 +90,8 @@ export default function Dashboard() {
             </button>
           </form>
         </div>
-        <div className="bg-gray-800 p-4 rounded-lg shadow-lg w-2/3"> {/* Larger width for Pet Record */}
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg w-2/3 fade-in fade-in-3">
+        {/* akong pet record na form */}
           <h2 className="text-3xl font-bold mb-4">Pet Record</h2>
           <table className="min-w-full bg-gray-700 rounded-lg overflow-hidden text-xs">
             <thead>
