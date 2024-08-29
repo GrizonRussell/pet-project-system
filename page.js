@@ -1,9 +1,8 @@
-'use client'
+'use client';
 import { useState } from 'react';
 
 export default function Dashboard() {
   const [pets, setPets] = useState([]);
-
   const [formData, setFormData] = useState({
     owner: '',
     name: '',
@@ -11,6 +10,8 @@ export default function Dashboard() {
     breed: '',
     dob: '',
   });
+  const [filter, setFilter] = useState('All');
+  const [filterValue, setFilterValue] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,12 +23,27 @@ export default function Dashboard() {
     setFormData({ owner: '', name: '', species: '', breed: '', dob: '' });
   };
 
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+    setFilterValue('');
+  };
+
+  const handleFilterValueChange = (e) => {
+    setFilterValue(e.target.value);
+  };
+
+  const getFilteredPets = () => {
+    if (filter === 'All' || filterValue === '') {
+      return pets;
+    }
+    return pets.filter((pet) => pet[filter.toLowerCase()] === filterValue);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4">
       <h1 className="text-5xl font-bold mb-6 ml-5 text-left fade-in fade-in-1">Dashboard</h1>
       <div className="flex justify-center space-x-4">
         <div className="bg-gray-800 p-4 rounded-lg shadow-lg w-1/4 fade-in fade-in-2">
-        {/* akong add pet na form */}
           <h2 className="text-2xl font-bold mb-4">Add Pet</h2>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
@@ -85,14 +101,49 @@ export default function Dashboard() {
                 className="w-full bg-gray-700 text-white p-2 rounded-lg border border-gray-600 text-xs"
               />
             </div>
-            <button type="submit" className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg w-full text-sm">
+            <button
+              type="submit"
+              className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg w-full text-sm"
+            >
               Add Pet
             </button>
           </form>
         </div>
         <div className="bg-gray-800 p-4 rounded-lg shadow-lg w-2/3 fade-in fade-in-3">
-        {/* akong pet record na form */}
           <h2 className="text-3xl font-bold mb-4">Pet Record</h2>
+          
+          <div className="mb-4 flex items-end">
+            {/* Filter Selection */}
+            <div className="w-1/2 mr-2">
+              <label className="block mb-1 text-sm">Filter by</label>
+              <select
+                className="w-full bg-gray-700 text-white p-2 rounded-lg border border-gray-600 text-xs"
+                value={filter}
+                onChange={handleFilterChange}
+              >
+                <option value="All">All</option>
+                <option value="Owner">Owner</option>
+                <option value="Species">Species</option>
+                <option value="Breed">Breed</option>
+              </select>
+            </div>
+            
+            {/* Filter Input */}
+            {filter !== 'All' && (
+              <div className="w-1/2">
+                <label className="block mb-1 text-sm">Enter {filter}</label>
+                <input
+                  type="text"
+                  placeholder={`Enter ${filter} to filter`}
+                  className="w-full bg-gray-700 text-white p-2 rounded-lg border border-gray-600 text-xs"
+                  value={filterValue}
+                  onChange={handleFilterValueChange}
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Pet Records Table */}
           <table className="min-w-full bg-gray-700 rounded-lg overflow-hidden text-xs">
             <thead>
               <tr className="bg-gray-700 text-white">
@@ -104,7 +155,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {pets.map((pet, index) => (
+              {getFilteredPets().map((pet, index) => (
                 <tr key={index} className="border-b border-gray-600">
                   <td className="py-2 px-2">{pet.owner}</td>
                   <td className="py-2 px-2">{pet.name}</td>
